@@ -1,5 +1,6 @@
+from collections import OrderedDict
+
 from pymongo import MongoClient
-from pymongo.results import InsertOneResult, InsertManyResult
 
 myclient: MongoClient = \
     MongoClient("mongodb+srv://root:root@cluster0-u9yg3.mongodb.net/test?retryWrites=true&w=majority")
@@ -9,28 +10,60 @@ print(myclient.list_database_names())
 mydb = myclient["FirstDatabase"]
 mycol = mydb["customers"]
 
-mydict = { "name": "John", "address": "Highway 37" }
+# Find
+x = mycol.find_one()
 
-x: InsertOneResult = mycol.insert_one(mydict)
-print(x, x.inserted_id)
+# 1
+print("="*6)
+print(x)
+
+# 2
+print("="*6)
+for x in mycol.find():
+    print(x)
+
+# 3
+print("="*6)
+for x in mycol.find({}, {"_id": 0, "name": 1, "address": 1}):
+    print(x)
 
 
-mylist = [
-  { "name": "Amy", "address": "Apple st 652"},
-  { "name": "Hannah", "address": "Mountain 21"},
-  { "name": "Michael", "address": "Valley 345"},
-  { "name": "Sandy", "address": "Ocean blvd 2"},
-  { "name": "Betty", "address": "Green Grass 1"},
-  { "name": "Richard", "address": "Sky st 331"},
-  { "name": "Susan", "address": "One way 98"},
-  { "name": "Vicky", "address": "Yellow Garden 2"},
-  { "name": "Ben", "address": "Park Lane 38"},
-  { "name": "William", "address": "Central st 954"},
-  { "name": "Chuck", "address": "Main Road 989"},
-  { "name": "Viola", "address": "Sideway 1633"}
-]
+# Find with filter
 
-x: InsertManyResult = mycol.insert_many(mylist)
+# 1
+print("="*6)
+myquery = { "address": "Highway 37" }
+mydoc = mycol.find(myquery)
 
-#print list of the _id values of the inserted documents:
-print(x, x.inserted_ids)
+for x in mydoc:
+    print(x)
+
+# 2 https://transbiz.com.tw/regex-regular-expression-ga-%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%A4%BA%E5%BC%8F/ 正規表示式
+print("="*6)
+
+myquery = {
+    "address": {
+        "$regex": "^Y|^S",
+    }
+}
+mydoc = mycol.find(myquery)
+for x in mydoc:
+    print(x)
+
+
+# sort
+# 1
+'''
+sort("name", 1) #ascending
+sort("name", -1) #descending
+'''
+print("="*6)
+
+myquery = {
+    "address": {
+        "$regex": "^Y|^S",
+    }
+}
+mydoc = mycol.find(myquery).sort("address")
+for x in mydoc:
+    print(x)
