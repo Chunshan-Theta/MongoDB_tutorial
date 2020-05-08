@@ -8,7 +8,7 @@ myclient: MongoClient = \
 
 mydb = myclient["FirstDatabase"]
 mycol = mydb["customers"]
-mydict = { "name": "John", "address": "Highway 37" }
+mydict = { "name": "John", "address": "Highway 37"}
 insert_result: InsertOneResult = mycol.insert_one(mydict)
 print(insert_result)
-mycol.delete_one(filter={ "_id": insert_result.inserted_id})
+mycol.delete_one(filter={"_id": insert_result.inserted_id})
