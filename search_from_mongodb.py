@@ -46,17 +46,12 @@ myquery = {
         "$regex": "^Y|^S",
     }
 }
-mydoc = mycol.find(myquery)
+mydoc = mycol.find(filter=myquery)
 for x in mydoc:
     print(x)
 
 
-# sort
-# 1
-'''
-sort("name", 1) #ascending
-sort("name", -1) #descending
-'''
+# 2 https://transbiz.com.tw/regex-regular-expression-ga-%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%A4%BA%E5%BC%8F/ 正規表示式
 print("="*6)
 
 myquery = {
@@ -64,6 +59,6 @@ myquery = {
         "$regex": "^Y|^S",
     }
 }
-mydoc = mycol.find(myquery).sort("address")
+mydoc = mycol.find(filter=myquery)
 for x in mydoc:
     print(x)
