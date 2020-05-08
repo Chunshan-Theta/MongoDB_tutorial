@@ -24,9 +24,8 @@ for x in mycol.find():
 
 # 3
 print("="*6)
-for x in mycol.find({}, {"_id": 0, "name": 1, "address": 1}):
+for x in mycol.find(filter={}, projection={"_id": 0, "name": 1, "address": 1}):
     print(x)
-
 
 # Find with filter
 

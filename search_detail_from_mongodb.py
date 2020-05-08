@@ -53,3 +53,10 @@ print("="*6)
 mydoc = mycol.find(limit=10).sort("address")
 for i,x in enumerate(mydoc):
     print(i,x)
+
+# skip
+# 1
+print("="*6)
+mydoc = mycol.find().skip(3)
+for i,x in enumerate(mydoc):
+    print(i,x)

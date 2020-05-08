@@ -84,6 +84,19 @@ for i in result:
 
 print("-" * 6)
 
+# <=
+result = mycol.find(filter={
+  "number": {
+    "$gte": 15,
+    "$lte": 30
+  }
+})
+
+for i in result:
+  print(i)
+
+print("-" * 6)
+
 
 # in
 # 1
